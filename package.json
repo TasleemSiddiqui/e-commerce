@@ -9,18 +9,46 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.1.6",
+    "@radix-ui/react-avatar": "^1.1.0",
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-dropdown-menu": "^2.1.1",
+    "@radix-ui/react-navigation-menu": "^1.2.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@reduxjs/toolkit": "^2.2.6",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/vision": "^3.48.1",
+    "@stripe/stripe-js": "^4.1.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "lucide-react": "^0.396.0",
+    "next": "^14.2.4",
+    "next-sanity": "^9.4.2",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.4"
+    "react-icons": "^5.2.1",
+    "react-redux": "^9.1.2",
+    "react-simple-typewriter": "^5.0.1",
+    "react-slick": "^0.30.2",
+    "react-toastify": "^10.0.5",
+    "sanity": "^3.48.1",
+    "slick-carousel": "^1.8.1",
+    "stripe": "^16.1.0",
+    "styled-components": "^6.1.11",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-slick": "^0.23.13",
+    "daisyui": "^4.12.2",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.4",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.4"
+    "typescript": "^5"
   }
 }
