@@ -36,17 +36,18 @@ export async function getProducts() {
   return products;
 }
 export async function getCategory() {
-  const query = `*[_type == 'category'] {
-  categoryName,
-  categorySlug {
-    current
-  },
-  categoryDescription,
-}`;
+//   const query = `*[_type == 'category'] {
+//   categoryName,
+//   categorySlug {
+//     current
+//   },
+//   categoryDescription,
+// }`;
 
-  const products = await client.fetch(query);
+  const products = await fetch('api/category');
+  const category = await products.json();
 
-  return products;
+  return category;
 }
 export async function getCategorybySlug(slug: string) {
 const query = `*[_type == "product" && references(*[_type == "category" && categorySlug.current == '${slug}']._id)] {
