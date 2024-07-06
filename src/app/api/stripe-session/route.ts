@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { client } from "../../../../sanity/lib/client";
 
 const key = process.env.STRIPE_SECRET_KEY || "";
 
@@ -53,3 +54,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(err.message);
   }
 }
+

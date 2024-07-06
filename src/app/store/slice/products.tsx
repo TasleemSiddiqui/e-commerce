@@ -30,14 +30,23 @@ const query = `*[_type == 'product'] {
       }
     }
   }`;
+// export const fetchProducts= createAsyncThunk(
+//     'products/listofproducts',
+//     async (data:any, thunkAPI) => {
+//         console.log("data",data)
+//       const response = await client.fetch(query)
+//       return response
+//     },
+//   )
 export const fetchProducts= createAsyncThunk(
-    'products/listofproducts',
-    async (data:any, thunkAPI) => {
-        console.log("data",data)
-      const response = await client.fetch(query)
-      return response
-    },
-  )
+  'products/listofproducts',
+  async (data:any, thunkAPI) => {
+      console.log("data",data)
+    const response = await fetch("/api/data");
+    const fetchData = await response.json();
+    return fetchData;
+  },
+)
 
 // Define the initial state using that type
 

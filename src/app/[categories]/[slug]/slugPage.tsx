@@ -10,19 +10,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
 import { fetchProducts } from "@/app/store/slice/products";
 import { currentUser } from "@clerk/nextjs/server";
-import { Heart, Minus, Plus } from "lucide-react";
+import { Heart, Minus, Plus, ShoppingCart } from "lucide-react";
 import { addtoCart } from "@/app/store/slice/cart";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Toast from "@/app/components/addToCarttoast";
 import getStipePromise from "@/lib/stripe";
 
-
-
 const Slug: FC<{ slug: string }> = ({ slug }) => {
-
-
-
   const products = useSelector((state: RootState) => state.products.products);
   const product: IProduct[] = products.filter(
     (val: any) => val.slug.current == slug
@@ -31,17 +26,17 @@ const Slug: FC<{ slug: string }> = ({ slug }) => {
   useEffect(() => {
     dispatch(fetchProducts({ id: 10 }));
   }, [dispatch]);
-  
+
   // const categoryNames = product[0].categories.map((val) => val.categoryName);
   const [cartItem, setCartItem] = useState({
-    _id:product[0]._id,
+    _id: product[0]._id,
     name: product[0].name,
-    categories:product[0].categories.map((val) => val.categoryName),
+    categories: product[0].categories.map((val) => val.categoryName),
     price: product[0].price,
     mainImage: product[0].mainImage,
-   slug: product[0].slug,
-   sizes:"",
-     qty: 1,
+    slug: product[0].slug,
+    sizes: "",
+    qty: 1,
   });
 
   function increment() {
@@ -51,35 +46,36 @@ const Slug: FC<{ slug: string }> = ({ slug }) => {
     setCartItem({ ...cartItem, qty: cartItem.qty <= 1 ? 1 : --cartItem.qty });
   }
 
-
-
-
-
   //check out button
 
   const cartArray = useSelector((state: RootState) => state.cart);
   const total = cartArray.reduce((total, arr) => {
     return total + arr.price * arr.qty;
   }, 0);
+
+  // handle checkout
+
+  const handleCheckout = async () => {
+    dispatch(addtoCart(cartItem));
+    const stripe = await getStipePromise();
+    const response = await fetch("/api/stripe-session/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-cache",
+      body: JSON.stringify(cartArray),
+    });
+
+    const data = await response.json();
+    if (data.session) {
+      stripe?.redirectToCheckout({ sessionId: data.session.id });
+    }
+  };
   
-// handle checkout
-
-
-const handleCheckout = async () => {
-  dispatch(addtoCart(cartItem))
-  const stripe = await getStipePromise();
-  const response = await fetch("/api/stripe-session/", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    cache: "no-cache",
-    body: JSON.stringify(cartArray),
-  });
-
-  const data = await response.json();
-  if (data.session) {
-    stripe?.redirectToCheckout({ sessionId: data.session.id });
+  function handleAddtoCart() {
+    dispatch(addtoCart(cartItem));
+    alert("Product added successfully ✅")
+    
   }
-};
 
   return (
     <section className="text-gray-600 body-font overflow-hidden">
@@ -186,11 +182,19 @@ const handleCheckout = async () => {
               <div className="divider"></div>
               <div className=" flex flex-col justify-center items-center">
                 {/* Add to cart Button */}
-                <Toast cartItem={cartItem}/>
-              
+                <Button
+                  onClick={handleAddtoCart}
+                  className="gap-2 flex  w-1/3 text-myWhite bg-myNavy border-0 py-2 px-6 focus:outline-none hover:bg-myPink rounded-xl"
+                >
+                  <ShoppingCart /> Add to cart{" "}
+                </Button>
+
                 <div className="divider">OR</div>
-                <Button onClick={handleCheckout} className=" gap-2 flex w-1/3 text-myWhite bg-myNavy border-0 py-2 px-6 focus:outline-none hover:bg-myPink rounded-xl">
-                <Heart/> Buy now
+                <Button
+                  onClick={handleCheckout}
+                  className=" gap-2 flex w-1/3 text-myWhite bg-myNavy border-0 py-2 px-6 focus:outline-none hover:bg-myPink rounded-xl"
+                >
+                  <Heart /> Buy now
                 </Button>
               </div>
             </div>

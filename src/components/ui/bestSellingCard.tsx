@@ -66,10 +66,11 @@ const BestSellingCard: FC<{
   function decrement() {
     setCartItem({ ...cartItem, qty: cartItem.qty <= 1 ? 1 : --cartItem.qty });
   }
-function handleAddToCart() {
-  dispatch(addtoCart(cartItem));
- notify(); 
-}
+  function handleAddtoCart() {
+    dispatch(addtoCart(cartItem));
+    alert("Product added successfully ✅")
+    
+  }
 
 
 
@@ -133,7 +134,7 @@ const handleCheckout = async () => {
             <Button className=" bg-myNavy text-myWhite hover:bg-myPink duration-500 rounded-xl gap-2" onClick={handleCheckout}>
                <Heart/> Buy Now
               </Button>
-              <Button onClick={handleAddToCart} className=" bg-myNavy text-myWhite hover:bg-myPink duration-500 rounded-xl gap-2">
+              <Button onClick={handleAddtoCart} className=" bg-myNavy text-myWhite hover:bg-myPink duration-500 rounded-xl gap-2">
                <ShoppingCart/> Add to cart
               </Button>
               

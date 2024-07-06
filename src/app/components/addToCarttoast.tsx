@@ -15,26 +15,31 @@ export default function Toast({ cartItem }: any) {
     dispatch(fetchProducts({ id: 10 }));
   }, [dispatch]);
 
-  const notify = () =>(
-    toast.success("Add to cart successfully!", {
+  const notify = () =>{
+   const not = toast.success('🦄 Wow so easy!', {
       position: "top-right",
-      autoClose: 2000,
+      autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
       theme: "light",
-    
-    })
-  )
+      transition: Bounce,
+      });
+      return not;
+    }
     
   return (
     <div className="w-full mx-auto">
+         
       <div
         onClick={notify}
         className="flex justify-center"
       >
+     
+{/* Same as */}
+<ToastContainer />
         <Button
           onClick={() => dispatch(addtoCart(cartItem))}
           className="gap-2 flex  w-1/3 text-myWhite bg-myNavy border-0 py-2 px-6 focus:outline-none hover:bg-myPink rounded-xl"
@@ -43,7 +48,7 @@ export default function Toast({ cartItem }: any) {
         </Button>
       </div>
 
-      <ToastContainer/>
+   
     </div>
   );
 }
